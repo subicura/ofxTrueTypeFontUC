@@ -3,10 +3,17 @@
 
 #include "ft2build.h"
 
+#ifdef TARGET_OSX
 #include "freetype2/freetype/freetype.h"
 #include "freetype2/freetype/ftglyph.h"
 #include "freetype2/freetype/ftoutln.h"
 #include "freetype2/freetype/fttrigon.h"
+#else
+#include "freetype.h"
+#include "ftglyph.h"
+#include "ftoutln.h"
+#include "fttrigon.h"
+#endif
 
 #ifdef TARGET_LINUX
 #include <fontconfig/fontconfig.h>
