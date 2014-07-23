@@ -36,6 +36,8 @@ public:
   void setLetterSpacing(float spacing);
   float getSpaceSize();
   void setSpaceSize(float size);
+  bool getUseIntPosition();
+  void setUseIntPosition(bool _newUseIntPosition);
   float stringWidth(const string &utf8_string);
   float stringHeight(const string &utf8_string);
   // get the num of loaded chars

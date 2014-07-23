@@ -60,6 +60,7 @@ public:
   float lineHeight;
   float letterSpacing;
   float spaceSize;
+  bool useIntPosition;
   int fontSize;
   bool bMakeContours;
   float simplifyAmt;
@@ -451,6 +452,7 @@ ofxTrueTypeFontUC::ofxTrueTypeFontUC(){
 #endif
   mImpl->letterSpacing = 1;
   mImpl->spaceSize = 1;
+  mImpl->useIntPosition = false;
   
   // 3 pixel border around the glyph
   // We show 2 pixels of this, so that blending looks good.
@@ -823,12 +825,22 @@ float ofxTrueTypeFontUC::getLetterSpacing(){
 
 //-----------------------------------------------------------
 void ofxTrueTypeFontUC::setSpaceSize(float _newspaceSize){
-  mImpl->spaceSize = _newspaceSize;
+    mImpl->spaceSize = _newspaceSize;
 }
 
 //-----------------------------------------------------------
 float ofxTrueTypeFontUC::getSpaceSize(){
-  return mImpl->spaceSize;
+    return mImpl->spaceSize;
+}
+
+//------------------------------------------------------------------
+void ofxTrueTypeFontUC::setUseIntPosition(bool _newUseIntPosition){
+    mImpl->useIntPosition = _newUseIntPosition;
+}
+
+//-----------------------------------------------------------
+bool ofxTrueTypeFontUC::getUseIntPosition(){
+    return mImpl->useIntPosition;
 }
 
 //------------------------------------------------------------------
@@ -1105,7 +1117,11 @@ void ofxTrueTypeFontUC::drawString(const string &utf8_src, float x, float y){
     }
     else {
       mImpl->bind(charID);
-      mImpl->drawChar(charID, X, Y);
+      if(getUseIntPosition()) {
+        mImpl->drawChar(charID, (int)X, (int)Y);
+      } else {
+        mImpl->drawChar(charID, X, Y);
+      }
       mImpl->unbind(charID);
       X += mImpl->cps[charID].setWidth * mImpl->letterSpacing;
     }
